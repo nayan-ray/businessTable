@@ -51,7 +51,7 @@ export const TableBusiness = () => {
                 </Container>
             </div>
             <div className='flex-grow-1 overflow-auto'>
-                <Table striped bordered hover>
+                <Table  bordered hover>
                     <thead>
                         <tr>
                             <th>PRODUCTS</th>
@@ -62,8 +62,23 @@ export const TableBusiness = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className=''>1fsdfjkdsfk jksdfk jk jksdjfk l dksfjl ksfd jklsdjfldksfl jdf ldfs jkk</td>
-                            <td>Mark</td>
+                            <td className=''>
+                                <div className='d-flex gap-4 align-items-center'>
+                                    
+                                    <img className=' object-fit-cover' style={{width : "150px"}} src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg" alt="" />
+                                     
+                                     <div className=' '>
+                                        <h6 className='text-secondary'>Product Name</h6>
+                                        <p className='text-secondary'>Product Description</p>
+                                     </div>
+                                </div>
+                            </td>
+                            <td className='d-flex flex-column df'>
+                                <div className=' flex-grow-1 d-flex flex-column justify-content-center align-items-center'>
+                                    <h6 className='text-secondary'>$100.00</h6>
+                                    <p className='text-secondary'>Camera</p>
+                                </div>
+                            </td>
                             <td>Otto</td>
                             <td>@mdo</td>
                         </tr>
