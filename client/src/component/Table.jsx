@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,11 +7,37 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 
 import "./table.css"
+import { setProductList } from '../feature/product/productSlice';
+
 
 export const TableBusiness = () => {
+
+     const ProductList = useSelector((state) => state.product.productList);
+     const dispatch = useDispatch();
+
+     useEffect(()=>{
+         try {
+            const fetchProductList = async () => {
+                const response = await axios.get('http://localhost:5000/api/v1/1/5/0');
+                const productList = response.data['data'][0]['products'];
+               
+               if(productList && productList.length > 0) {
+                   dispatch(setProductList(productList));
+               }
+            }
+            fetchProductList();
+         } catch (error) {
+             console.error("Error fetching product list:", error);
+            
+         }
+     }, [])
+
+   
     return (
         <div className='tableContainer bg-white d-flex flex-column'>
 
@@ -61,31 +87,32 @@ export const TableBusiness = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className=''>
-                                <div className='d-flex gap-4 align-items-center'>
-                                    
-                                    <img className=' object-fit-cover' style={{width : "150px"}} src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg" alt="" />
-                                     
-                                     <div className=' '>
-                                        <h6 className='text-secondary'>Product Name</h6>
-                                        <p className='text-secondary'>Product Description</p>
-                                     </div>
-                                </div>
-                            </td>
-                            <td className='d-flex flex-column df'>
-                                <div className=' flex-grow-1 d-flex flex-column justify-content-center align-items-center'>
-                                    <h6 className='text-secondary'>$100.00</h6>
-                                    <p className='text-secondary'>Camera</p>
-                                </div>
-                            </td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
 
+                        {ProductList && ProductList.map((product, i)=>{
+                            return (
+                                <tr key={i}>
+                                    <td className=''>
+                                        <div className='d-flex gap-4 align-items-center'>
+                                          <img className=' object-fit-cover' style={{width : "150px"}} src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg" alt="" />
+                                            <div className=' '>
+                                                <h6 className='text-secondary'>{product.title}</h6>
+                                                <p className='text-secondary'>{product.shop_name}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className='d-flex flex-column df'>
+                                        <div className=' flex-grow-1 d-flex flex-column justify-content-center align-items-center'>
+                                            <h6 className='text-secondary'>${product.price}</h6>
+                                            <p className='text-secondary'>{product.category}</p>
+                                        </div>
+                                    </td>
+                                    <td className='text-secondary'>{product.stock}</td>
+                                    <td className='text-secondary'>{product.product_code}</td>
+                                </tr>
+                            )
 
-
-
+                        })}
+                 
                     </tbody>
                 </Table>
             </div>
