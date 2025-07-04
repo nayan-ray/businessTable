@@ -4,6 +4,7 @@ const mongoose = require('./config/db');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const productRouter = require('./routes/productsRouter');
 // const userRoutes = require('./routes/userRoutes');
 
 
@@ -23,6 +24,10 @@ app.get("/", (req, res)=>{
     
     res.send("API is running...");
 })
+
+//api
+app.use("/api/v1", productRouter)
+
 
 // Routes
 // app.use('/api/users', userRoutes);
