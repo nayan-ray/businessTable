@@ -24,7 +24,7 @@ const getProductsOnQuery = async (req, res)=>{
         const searchValue = req.params.searchValue || "";
         const skipRows = (pageNumber - 1) * perPage;
         let ProductList;
-        if(searchValue !== 0){
+        if(searchValue !== '0' ){
             const reEx = {"$regex": searchValue, "$options": "i"};
             const query = {
                 $or: [
